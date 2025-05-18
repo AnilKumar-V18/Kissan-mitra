@@ -1,0 +1,127 @@
+.navbar,
+.navbar-default {
+    background-color: #2f4f4f !important; /* override background image gradient w/ flat color */
+}
+
+.mine{
+ 	margin-left: 750px;
+}
+
+.carHover
+{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.myButton
+{
+	background-color:#303030; /* Green */
+	border: 3px solid #303030;
+	color: white;
+	padding: 8px 20px;
+	text-align: center;
+	width: 130px;
+	display: inline-block;
+	font-size: 16px;
+	
+	margin-top: 4px;
+	margin-left: -20px;
+	margin-bottom: 5px;
+	transition-duration: all 0.10s;
+}
+
+.myButton:focus{
+	background-color: white; /* Green */
+	color: #303030;
+	border: 3px solid #303030 ;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+.myButton:hover{
+	background-color: white; /* Green */
+	color: #303030;
+	border: 3px solid #303030 ;
+	transition: transform .6s;
+  	transform: scale(1.07);
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .btn:hover
+  {
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	transition: transform .9s;
+  	transform: scale(1.06);
+  }
+
+  .myImg{
+	object-fit:cover;
+	margin-bottom: 20px;
+	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .card
+  {
+	border-radius: 20px;
+  }
+
+  .card:hover
+  {
+	transition: transform .9s;
+	transform: scale(1.02);
+	border-color: black;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .cartItems
+  {
+		width: 1000px;
+		margin-left: 20px;
+  }
+
+  .cartSummary
+  {
+		margin-left: 0px;
+		
+  }
+
+.carousel_home{
+	padding: 0rem;
+	max-width: 1000px;
+	position: relative;
+	margin: auto;
+	border: 8px solid #5fd46f;
+   	/* box-shadow: 0px 0px 0px 10px #c3dcdf; */
+   	border-radius: 7px;
+}
+
+.carousel_home:hover{
+	-o-transition:.5s;
+	-ms-transition:.5s;
+	-moz-transition:.5s;
+	-webkit-transition:.5s;
+	transition:.5s;
+	box-shadow: 10px 10px 5px #85e993;
+	border-radius: 17px;
+}
+
+.card_fcard{
+    background-color: #2f4f4f;
+	color: white;
+}
+
+.info_dashboard{
+	text-align: center;
+	font-weight: 800;
+	color: rgb(219, 151, 24);
+}
+
+.info_dashboard:hover{
+	-o-transition:.5s;
+	-ms-transition:.5s;
+	-moz-transition:.5s;
+	-webkit-transition:.5s;
+	transition:.5s;	
+	text-shadow: 2px 2px 10px #000000;
+  	filter: dropshadow(color=#000000, offx=2, offy=2);
+	font-size: 43px;
+}
+

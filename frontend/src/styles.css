@@ -1,0 +1,325 @@
+/**
+ * border radius
+ */
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+body {
+    /* background: #F0F8FF !important; */
+    background: #E0FFFF;
+    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Georgia', 'Fira Sans', sans-serif; */
+  }
+
+
+.fetch_data{
+    background-color: #17a2b8;
+    color: white;
+}
+
+.update_deets{
+    margin-left: 36%;
+    color: rgb(0, 153, 255);
+}
+
+
+.btn,
+.jumbotron,
+.nav :hover {
+    border-radius: 0px;
+}
+.navbar-light {
+    background-color:  #4169E1;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  }
+
+/* cart badge */
+
+.cart-badge,
+.cart-badge:hover {
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 12px;
+    font-style: italic;
+    background: white;
+    color: black;
+}
+/**
+ * single product page - product name
+ */
+
+.name {
+    background: indigo;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* black shade form 10-1 */
+.black-10 {
+    background: #f2f2f2;
+}
+.black-9 {
+    background: #e6e6e6;
+}
+.black-8 {
+    background: #d9d9d9;
+}
+.black-7 {
+    background: #cccccc;
+}
+.black-6 {
+    background: #bfbfbf;
+}
+.black-5 {
+    background: #b3b3b3;
+}
+
+/**
+ * product   on card
+ */
+
+.product-img {
+    min-height: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+    .jumbotron h2 {
+        margin-top: 10px;
+        font-family: 'Lobster', cursive;
+    }
+}
+
+/**
+ * jumbotron animation
+ */
+
+ .jumbotron h2 {
+    margin-top: -30px;
+    color: black;
+    margin-left: 0%;
+    font-size: 50px;
+    /* text-shadow: 4px 4px 9px grey; */
+    text-align: center;
+    font-family: 'Lobster', cursive;
+}
+
+.jumbotron p {
+    margin-top: -10px;
+    color: black;
+    margin-left: 450px;
+    /* text-shadow: 2px 2px 5px grey; */
+}
+.jumbotron {
+    height: 10px;
+    color: #fff;
+	margin-top:50px;
+    background-color:  #E0FFFF;
+}
+
+/**
+ * signin signup forms
+ */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .auth-inner {
+    width: 450px;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 20px 55px 45px 55px;
+    border-radius: 25px;
+    transition: all .3s;
+  }
+  
+  .auth-wrapper .form-control:focus {
+    border-color: #167bff;
+    box-shadow: none;
+  }
+  
+  .auth-wrapper h3 {
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    padding-bottom: 20px;
+  }
+  
+  .auth-wrapper-up {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .auth-inner-up {
+    width: 450px;
+    margin-top: -105px;
+    
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 20px 55px 45px 55px;
+    border-radius: 25px;
+    transition: all .3s;
+  }
+  .auth-wrapper-up .form-control:focus {
+    border-color: #167bff;
+    box-shadow: none;
+  }
+  
+  .auth-wrapper-up h3 {
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    padding-bottom: 20px;
+  }
+
+  .auth-inner-left {
+    width: 450px;
+    margin-top: -30px;
+    margin-left: 420px;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 20px 55px 45px 55px;
+    border-radius: 25px;
+    transition: all .3s;
+  }
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#market_price_body{
+    background-color: rgb(198, 223, 238);
+    color: black;
+}
+
+
+.mycard{
+    border: black;
+    border-width: 2px;
+    height: 270px;
+    width: 250px;
+    background: #82c2d0;
+    border-radius: 30px;
+}
+.mycard:hover {
+    border-radius: 10%;
+    /* padding: 2px; */
+    border-color: red;
+    border-width: 8px;
+    background:  #ade8f6;
+    /* transform: translateY(10px); */
+    /* z-index: -9; */
+    transform: scale(1.10);
+    /* color: black; */
+}
+.weather_info{
+    font-size: 15px;
+}
+
+  /* Sign In Form*/
+
+.signin_form,
+.signup_form{
+	background-color: #F5F5F5 !important;
+}
+
+.form-control:focus{
+	background-color: #E0FFFF;
+}
+
+.signin,
+.signup{
+    font-family: 'Lobster', cursive;  
+}
+
+.signup_card{
+    margin-left: 35%;
+}
+
+.card_farmer{
+    background-color: rgb(224, 180, 98);
+}
+
+
+.btn_dashboard{
+    background-color: rgb(224, 180, 98);
+}
+
+.farmer_text{
+    color: black;
+}
+
+.nav-link,
+.nav-link:hover{
+    color: black;   
+}
+
+hr{
+    color: white;
+    background-color: white;
+}
+
+
+
+/*Weather Card*/
+.imgClass{
+    width: 120px;
+    margin-left: -13px;
+}
+.weather_info{
+    text-align: left;
+    font-size: 13px;
+    padding: 0%;
+    margin:0%;
+    margin-left: 17px;
+}
+.weather{
+    font-weight: 500;
+    font-size: 23px;
+    text-align: center;
+    color: black;
+    padding-top: 0%;
+    margin-top: 0%;
+    margin-left: -19px;
+}
+.weather_deets{
+    font-size: 16px;
+    text-align:left;
+}
