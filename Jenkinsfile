@@ -59,11 +59,16 @@ pipeline{
             }
         }
         stage('Stage 6: Ansible Deployment to machine'){
-            steps{
-                
-                ansiblePlaybook becomeUser: 'null', colorized: true, credentialsId: 'docker', installation: 'Ansible', inventory: 'deploy-docker/inventory', playbook: 'deploy-docker/deploy-app.yml', sudoUser: 'null'
-            
-            }          
-        }   
+    steps{
+        sshagent(['ubuntu-ssh']) {  // replace 'ubuntu-ssh' with your Jenkins SSH credential ID
+            ansiblePlaybook(
+                colorized: true,
+                credentialsId: 'ubuntu-ssh',  // your SSH private key credential ID
+                installation: 'Ansible',
+                inventory: 'deploy-docker/inventory',
+                playbook: 'deploy-docker/deploy-app.yml'
+            )
+        }
     }
 }
+
