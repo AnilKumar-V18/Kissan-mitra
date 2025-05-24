@@ -1,2 +1,2 @@
 [ubuntu]
-localhost ansible_user=anilkumar
+192.168.61.210 ansible_user=anilkumar
