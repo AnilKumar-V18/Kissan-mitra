@@ -33,16 +33,17 @@ pipeline {
             }
         }
 
-      stage('Stage 4: NPM Test inside Backend Docker') {
+     stage('Stage 4: NPM Test inside Backend Docker') {
     steps {
         script {
-            withDockerContainer('avk18/kissan_mitra-backend-app:latest') {
-                // Change into the app directory before running tests
-                sh 'cd /usr/src/app && npm test'
+            docker.image('avk18/kissan_mitra-backend-app:latest').inside("-w /usr/src/app") {
+                sh 'npm install'  // Optional, to ensure dependencies are present
+                sh 'npm test'
             }
         }
     }
 }
+
 
 
         stage('Stage 5: Push Server Docker Image to DockerHub') {
