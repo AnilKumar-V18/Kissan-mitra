@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
 WORKDIR /usr/src/app
-RUN npm install -g npm@9.6.7 && npm cache clean --force # update npm to stable version
+#RUN npm install -g npm@9.6.7 && npm cache clean --force # update npm to stable version
 
 
 # Copy only package files first to leverage caching
