@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registryCredential = 'docker'
+        registryCredential = 'dockerhub-creds'
         DOCKER_BUILDKIT = '1'
         IMAGE_TAG = 'latest'
     }
