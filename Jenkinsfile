@@ -4,6 +4,7 @@ pipeline {
         DOCKER_BUILDKIT = '1'
         IMAGE_TAG = 'latest'
     }
+
     agent any
 
     stages {
@@ -33,18 +34,21 @@ pipeline {
             }
         }
 
-     stage('Stage 4: NPM Test inside Backend Docker') {
-    steps {
-        script {
-            docker.image('avk18/kissan_mitra-backend-app:latest').inside("-w /usr/src/app") {
-                sh 'npm install'  // Optional, to ensure dependencies are present
-                sh 'npm test'
+        stage('Stage 4: NPM Test inside Backend Docker') {
+            steps {
+                script {
+                    docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}")
+                          .inside("-w /usr/src/app") {
+                        // Optional: Show directory contents for debugging
+                        sh 'echo "Current Dir:" && pwd && ls -la'
+
+                        // Install dependencies and run tests
+                        sh 'npm install'
+                        sh 'npm test'
+                    }
+                }
             }
         }
-    }
-}
-
-
 
         stage('Stage 5: Push Server Docker Image to DockerHub') {
             steps {
