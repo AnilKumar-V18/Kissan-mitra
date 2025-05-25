@@ -1,7 +1,8 @@
 pipeline {
     environment {
         registryCredential = 'docker'
-        DOCKER_BUILDKIT = '1'  // Optional, to enable BuildKit
+        DOCKER_BUILDKIT = '1'
+        IMAGE_TAG = 'latest'
     }
     agent any
 
@@ -16,7 +17,7 @@ pipeline {
             steps {
                 dir("backend") {
                     script {
-                        def server_image = docker.build("avk18/kissan_mitra-backend-app:latest").imageId()
+                        docker.build("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}")
                     }
                 }
             }
@@ -26,43 +27,43 @@ pipeline {
             steps {
                 dir("frontend") {
                     script {
-                        def client_image = docker.build("avk18/kissan_mitra-frontend-app:latest").imageId()
+                        docker.build("avk18/kissan_mitra-frontend-app:${env.IMAGE_TAG}")
                     }
                 }
             }
         }
 
-        stage('Stage 3.5: NPM Testing inside Backend Docker') {
+        stage('Stage 4: NPM Test inside Backend Docker') {
             steps {
                 script {
-                    docker.image("avk18/kissan_mitra-backend-app:latest").inside {
+                    docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside {
                         sh 'npm test'
                     }
                 }
             }
         }
 
-        stage('Stage 4: Push Server Docker Image to DockerHub') {
+        stage('Stage 5: Push Server Docker Image to DockerHub') {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        docker.image("avk18/kissan_mitra-backend-app:latest").push()
+                        docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").push()
                     }
                 }
             }
         }
 
-        stage('Stage 5: Push Client Docker Image to DockerHub') {
+        stage('Stage 6: Push Client Docker Image to DockerHub') {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        docker.image("avk18/kissan_mitra-frontend-app:latest").push()
+                        docker.image("avk18/kissan_mitra-frontend-app:${env.IMAGE_TAG}").push()
                     }
                 }
             }
         }
 
-        stage('Stage 6: Ansible Deployment to Machine') {
+        stage('Stage 7: Ansible Deployment to Machine') {
             steps {
                 sshagent(['ubuntu-ssh']) {
                     ansiblePlaybook(
@@ -74,6 +75,12 @@ pipeline {
                     )
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
