@@ -32,25 +32,19 @@ pipeline {
                 }
             }
         }
-        stage('Stage : npm testing'){
-            steps{
-                dir("backend"){
-                    sh 'npm i'
-                    sh 'npm run test'
-                }
-            }
-        }
+       
 
-//      stage('Stage 4: NPM Test inside Backend Docker') {
-//     steps {
-//         script {
-//             docker.image('avk18/kissan_mitra-backend-app:latest').inside("-w /usr/src/app") {
-//                 sh 'npm install'  // Optional, to ensure dependencies are present
-//                 sh 'npm test'
-//             }
-//         }
-//     }
-// }
+     stage('Stage 4: NPM Test inside Backend Docker') {
+    steps {
+        script {
+docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside("-w /usr/src/app") {
+    sh 'npm install --legacy-peer-deps'
+    sh 'npm test'
+}
+
+        }
+    }
+}
 
 
 
