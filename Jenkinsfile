@@ -36,7 +36,7 @@ pipeline {
         stage('Stage 4: NPM Test inside Backend Docker') {
             steps {
                 script {
-                    docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside {
+                    docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside('/usr/src/app') {
                         sh 'npm test'
                     }
                 }
