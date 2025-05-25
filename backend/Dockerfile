@@ -1,20 +1,19 @@
 FROM node:18-alpine
 
-# Set working directory
 WORKDIR /usr/src/app
+#RUN npm install -g npm@9.6.7 && npm cache clean --force # update npm to stable version
 
-# Install dependencies
+
+# Copy only package files first to leverage caching
 COPY package*.json ./
+
+
+# Use --legacy-peer-deps to avoid peer dependency conflicts
 RUN npm install --legacy-peer-deps
 
-# Copy application source
+# Copy all other files
 COPY . .
 
-# Expose your app's port
 EXPOSE 8000
 
-# Add a test runner command so Jenkins can reuse it (optional)
-RUN chmod +x ./node_modules/.bin/*
-
-# Default start command
 CMD ["npm", "start"]
