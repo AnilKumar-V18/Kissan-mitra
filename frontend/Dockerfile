@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 # Copy package files first to leverage Docker cache
 COPY package*.json ./
 
+RUN npm install -g npm@9.6.7  # update npm to stable version
+
 # Use legacy-peer-deps to avoid npm peer dependency errors
 RUN npm install --legacy-peer-deps
 
