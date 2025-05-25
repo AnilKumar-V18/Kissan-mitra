@@ -1,6 +1,7 @@
 pipeline {
     environment {
         registryCredential = 'docker'
+        DOCKER_BUILDKIT = '1'  // Optional, to enable BuildKit
     }
     agent any
 
@@ -15,7 +16,7 @@ pipeline {
             steps {
                 dir("backend") {
                     script {
-                        server_image = docker.build("avk18/kissan_mitra-backend-app:latest")
+                        def server_image = docker.build("avk18/kissan_mitra-backend-app:latest").imageId()
                     }
                 }
             }
@@ -25,7 +26,7 @@ pipeline {
             steps {
                 dir("frontend") {
                     script {
-                        client_image = docker.build("avk18/kissan_mitra-frontend-app:latest")
+                        def client_image = docker.build("avk18/kissan_mitra-frontend-app:latest").imageId()
                     }
                 }
             }
@@ -34,8 +35,7 @@ pipeline {
         stage('Stage 3.5: NPM Testing inside Backend Docker') {
             steps {
                 script {
-                    // Run tests inside the backend image container
-                    server_image.inside {
+                    docker.image("avk18/kissan_mitra-backend-app:latest").inside {
                         sh 'npm test'
                     }
                 }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        server_image.push()
+                        docker.image("avk18/kissan_mitra-backend-app:latest").push()
                     }
                 }
             }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        client_image.push()
+                        docker.image("avk18/kissan_mitra-frontend-app:latest").push()
                     }
                 }
             }
