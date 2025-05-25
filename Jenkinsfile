@@ -15,7 +15,7 @@ pipeline {
             steps {
                 dir("backend") {
                     script {
-                        server_image = docker.build("avk18/kissan_mitra-backend-app:latest").imageId()
+                        server_image = docker.build("avk18/kissan_mitra-backend-app:latest")
                     }
                 }
             }
@@ -25,17 +25,19 @@ pipeline {
             steps {
                 dir("frontend") {
                     script {
-                        client_image = docker.build("avk18/kissan_mitra-frontend-app:latest").imageId()
+                        client_image = docker.build("avk18/kissan_mitra-frontend-app:latest")
                     }
                 }
             }
         }
 
-        stage('Stage 3.5: NPM Testing') {
+        stage('Stage 3.5: NPM Testing inside Backend Docker') {
             steps {
-                dir("backend") {
-                    sh 'npm install'
-                    sh 'npm run test'
+                script {
+                    // Run tests inside the backend image container
+                    server_image.inside {
+                        sh 'npm test'
+                    }
                 }
             }
         }
@@ -44,7 +46,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        docker.image("avk18/kissan_mitra-backend-app:latest").push()
+                        server_image.push()
                     }
                 }
             }
@@ -54,7 +56,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        docker.image("avk18/kissan_mitra-frontend-app:latest").push()
+                        client_image.push()
                     }
                 }
             }
