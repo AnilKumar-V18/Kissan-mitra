@@ -3,6 +3,7 @@ pipeline {
         registryCredential = 'dockerhub-creds'
         DOCKER_BUILDKIT = '1'
         IMAGE_TAG = 'latest'
+        DOCKERHUB_NAMESPACE = 'avk18'  // Added this missing environment variable
     }
     agent any
 
@@ -33,28 +34,24 @@ pipeline {
             }
         }
        
-
-     stage('Run NPM Tests inside Backend Docker') {
-    steps {
-        script {
-            echo "Running npm test inside backend Docker container..."
-            docker.image("${env.DOCKERHUB_NAMESPACE}/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside('-w /usr/src/app') {
-                sh '''
-                    npm test
-                '''
+        stage('Run NPM Tests inside Backend Docker') {
+            steps {
+                dir("backend") {
+                    script {
+                        echo "Running npm test inside backend Docker container..."
+                        // Use the locally built image instead of trying to pull
+                        docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside('-w /usr/src/app') {
+                            sh 'npm test'
+                        }
+                    }
+                }
             }
         }
-    }
-}
-
-
-
-
 
         stage('Stage 5: Push Server Docker Image to DockerHub') {
             steps {
                 script {
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                         docker.image("avk18/kissan_mitra-backend-app:${env.IMAGE_TAG}").push()
                     }
                 }
@@ -64,7 +61,7 @@ pipeline {
         stage('Stage 6: Push Client Docker Image to DockerHub') {
             steps {
                 script {
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                         docker.image("avk18/kissan_mitra-frontend-app:${env.IMAGE_TAG}").push()
                     }
                 }
@@ -92,5 +89,3 @@ pipeline {
         }
     }
 }
-
-
