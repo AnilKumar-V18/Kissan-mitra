@@ -34,19 +34,19 @@ pipeline {
         }
        
 
-     stage('Stage 4: NPM Test inside Backend Docker') {
+     stage('Run NPM Tests inside Backend Docker') {
     steps {
         script {
-            docker.image('avk18/kissan_mitra-backend-app:latest').inside('-w /usr/src/app') {
+            echo "Running npm test inside backend Docker container..."
+            docker.image("${env.DOCKERHUB_NAMESPACE}/kissan_mitra-backend-app:${env.IMAGE_TAG}").inside('-w /usr/src/app') {
                 sh '''
-                    echo "Running npm install and tests inside backend container"
-                    npm install --legacy-peer-deps
-                    npm test || echo "No tests defined, continuing..."
+                    npm test
                 '''
             }
         }
     }
 }
+
 
 
 
