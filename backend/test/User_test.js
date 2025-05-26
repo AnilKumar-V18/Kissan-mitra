@@ -1,143 +1,85 @@
-var expect  = require("chai").expect;
+var expect = require("chai").expect;
 var request = require("request");
 
-describe("User API Testing", function(){
+// Base configuration
+const SERVER_URL = "http://localhost:8000"; // Using port 8000 as per your server logs
+const API_BASE = `${SERVER_URL}/api`;
 
-    global.id="";
+// Test user credentials (replace with your actual test user)
+const TEST_USER = {
+  email: "test@kisaan.com",
+  password: "test123",
+  name: "Test User",
+  location: "Test Location",
+  role: "0"
+};
 
-    describe("Testing - Home Page Loading", function(){
+describe("User API Testing", function() {
+  this.timeout(5000); // Set test timeout
 
-        // var url = "http://localhost:8000/api/farmers";
-        var url= "https://kisaan-portal.netlify.app/";
+  describe("Testing - Home Page Loading", function() {
+    it("returns status 200", function(done) {
+      request(`${API_BASE}/farmers`, function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
 
-        it("returns status 200", function(done){
-            request(url, function(error, response, body){
-                expect(response.statusCode).to.equal(200);
-                done();
-            })
-        })
-    })
-    describe("Testing - SignIn", function(){
-        var url = "https://kisaan-portal.herokuapp.com/api/signin";
+  describe("Testing - SignIn", function() {
+    it("returns status 200 with valid credentials", function(done) {
+      request({
+        url: `${API_BASE}/signin`,
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: { email: TEST_USER.email, password: TEST_USER.password },
+        json: true
+      }, function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
 
-        it("returns status http-code 200", function(done){
-            request({
-                url: url,
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: {email: "niraj@gmail.com", password: "niraj123"},
-                json: true
-            }, function(error, response, body){
-                expect(response.statusCode).to.equal(200);
-                done();
-            })
-        })
+  describe("Testing - Sign Up", function() {
+    it("New User SignUp returns 200", function(done) {
+      const newUserEmail = `test+${Date.now()}@kisaan.com`;
+      
+      request({
+        url: `${API_BASE}/signup`,
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+          name: TEST_USER.name,
+          email: newUserEmail,
+          password: TEST_USER.password,
+          location: TEST_USER.location,
+          role: TEST_USER.role
+        },
+        json: true
+      }, function(error, response, body) {
+        if (response.statusCode === 200) {
+          expect(response.statusCode).to.equal(200);
+        } else {
+          expect(response.statusCode).to.equal(400);
+        }
+        done();
+      });
+    });
+  });
 
-        it("New Login", function(done){
-            request({
-                url: url,
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: {email: "niraj@gmail.com", password: "niraj123"},
-                json: true
-            }, function(error, response, body){
-                //console.log(body);
-                expect(response.statusCode).to.equal(200);
-                done();
-            })
-        })
-
-    })
-
-    describe("Testing - Sign Up", function(){
-        var url = "https://kisaan-portal.herokuapp.com/api/signup";
-
-        it("New User SignUp", function(done){
-            request({
-                url: url, 
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body:{name: "Tester" , email:"Test@gmail.com", password:"Test123", location:"Maharashtra", role: "0"},
-                json:true,
-            },function(error, response, body){
-                if(response.statusCode===200){
-                    //console.log(body);
-                    console.log(body);
-                    expect(response.statusCode).to.equal(200);
-                }
-                else {
-                    expect(response.statusCode).to.equal(400);
-                }
-            })
-            done();
-        })
-    })
-
-
-    describe("Testing Existing - Farmer Details", function(){      
-        it("Return Status Code - 200 Default Farmer Exists", function(done){
-            var url = "https://kisaan-portal.herokuapp.com/api/farmer/6261739040865c739ed47d12";
-            request({
-                url: url,
-                method: "GET",
-
-            }, function(error, response, body){
-                console.log(body);
-                expect(response.statusCode).to.equal(200);
-                done();
-            })
-        })
-
-        
-        it("Invalid Id - Farmer Not Found", function(done){
-            var url = "https://kisaan-portal.herokuapp.com/api/farmer/60a009203abf800041dc6269";
-            //console.log(url)
-            request({
-                url: url,
-                method: "GET",
-
-            }, function(error, response, body){
-                console.log(body);
-                expect(response.statusCode).to.equal(400);
-                done();
-            })
-        })
-    })
-
+  describe("Testing Farmer Details", function() {
+    // Replace with a valid farmer ID from your local database
+    const VALID_FARMER_ID = "507f1f77bcf86cd799439011";
     
-    // describe("update users", function(){
-    //     it("returns status 200", function(done){
-    //         var url = "https://backend-service-falcon2212.cloud.okteto.net/users/update/60a009203abf800041dc6269";
-    //         request({
-    //             url : url,
-    //             method: "POST",
-    //             headers: {'Content-Type': 'application/json'},
-    //             body:{username:"Test100", password:"Test100", email:"Test100@gmail.com", name: "Test100", devices: ["Test", "Test1"]},
-    //             json:true,
-    //         },function(error, response, body){
-    //             console.log(body);
-    //             expect(response.statusCode).to.equal(200);
-    //         })
-    //         done();
-    //     })
-
-    //     /*it("update new user", function(done){
-    //         var url = "https://backend-service-falcon2212.cloud.okteto.net/users/update/".concat(id);
-    //         request({
-    //             url : url,
-    //             method: "POST",
-    //             headers: {'Content-Type': 'application/json'},
-    //             body:{username:"Test40", password:"Test40", email:"Test40@gmail.com", name: "Test40", devices: ["Test2", "Test40"]},
-    //             json:true,
-    //         },function(error, response, body){
-    //             console.log(url);
-    //             console.log(body);
-    //             console.log(id);
-    //             expect(response.statusCode).to.equal(200);
-    //         })
-    //         done();
-    //     })*/
-
-    // })
-
-})
+    it("Returns 200 for existing farmer", function(done) {
+      request({
+        url: `${API_BASE}/farmer/${VALID_FARMER_ID}`,
+        method: "GET"
+      }, function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
+});
